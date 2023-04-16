@@ -61,7 +61,8 @@ def test_user_flow(admin_client: 'APIClient', anon_client: 'APIClient'):
             'email': f'email_{i}@mail.ru',
         }
         for i in range(users_count)
-    ]
+    ] 
+    
 
     """
 
