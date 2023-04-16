@@ -10,11 +10,26 @@ from django.contrib.auth.models import User
 from lib.build.lib.app_lib.services.notification_service import NotificationService
 from tasks.models import File
 
+# TODO
+from django.contrib.auth import get_user_model
+import factory
+
 if TYPE_CHECKING:
     from tasks.apps import TasksConfig
 
 
 TEST_USER = 'test_user'
+
+# TODO
+class UserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = get_user_model()
+
+    username = factory.Faker("user_name")
+    email = factory.Faker("email")
+    password = factory.PostGenerationMethodCall("set_password", "password")
+    is_staff = True
+    is_superuser = True
 
 
 @pytest.fixture
@@ -36,11 +51,10 @@ def client(anon_client, user):
 
 ADMIN_NAME = 'admin'
 
-
+# TODO нужно дополнить фикстуру что бы она возвращала вновь созданного пользователя в статусе admin
 @pytest.fixture
 def admin():
-    # TODO нужно дополнить фикстуру что бы она возвращала вновь созданного пользователя в статусе admin
-    ...
+    return UserFactory.create()
 
 
 @pytest.fixture
